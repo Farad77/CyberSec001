@@ -1,0 +1,134 @@
+{
+  "emails": [
+    {
+      "id": 1,
+      "subject": "🚨 URGENT: Votre compte sera suspendu dans 24h !",
+      "from": "security@arnaque-paypal.com",
+      "from_display": "PayPal Sécurité",
+      "date": "2025-01-10 09:15:00",
+      "content": "Cher client,<br><br>Nous avons détecté une activité suspecte sur votre compte PayPal. Pour éviter la suspension de votre compte, vous devez vérifier vos informations immédiatement.<br><br><strong>ATTENTION: Votre compte sera suspendu dans 24 heures si vous n'agissez pas maintenant!</strong><br><br>Cliquez sur le lien ci-dessous pour vérifier votre compte:<br><a href='http://paypal-verification.malicious-site.com/verify' style='color: #0070ba;'>Vérifier mon compte PayPal</a><br><br>Si vous ne pouvez pas cliquer sur le lien, copiez et collez cette adresse dans votre navigateur:<br>http://paypal-verification.malicious-site.com/verify<br><br>Cordialement,<br>L'équipe PayPal Sécurité<br><br><small>Cet email a été envoyé depuis une adresse non surveillée. Merci de ne pas y répondre.</small>",
+      "is_phishing": true,
+      "difficulty": "facile",
+      "red_flags": [
+        "Adresse email suspecte (arnaque-paypal.com)",
+        "Urgence artificielle (24h)",
+        "Lien vers un site malveillant",
+        "Demande de vérification d'informations",
+        "Fautes de français subtiles"
+      ],
+      "correct_answers": {
+        "is_phishing": true,
+        "sender_suspicious": true,
+        "urgency_suspicious": true,
+        "link_suspicious": true
+      }
+    },
+    {
+      "id": 2,
+      "subject": "Félicitations ! Vous avez gagné 50 000€ !",
+      "from": "loterie@euro-millions-officiel.net",
+      "from_display": "EuroMillions Officiel",
+      "date": "2025-01-10 14:30:00",
+      "content": "🎉 FÉLICITATIONS ! 🎉<br><br>Vous avez été sélectionné comme GAGNANT de notre loterie EuroMillions !<br><br>Votre numéro gagnant est: <strong>EM-2025-75849</strong><br><br>💰 <strong>MONTANT GAGNÉ: 50 000€</strong> 💰<br><br>Pour récupérer votre prix, vous devez:<br>1. Confirmer votre identité<br>2. Fournir vos coordonnées bancaires<br>3. Payer les frais de transfert de 199€<br><br>⚠️ ATTENTION: Cette offre expire dans 48h !<br><br>Cliquez ici pour récupérer votre gain:<br><a href='http://euromillions-gain.fake-lottery.org/claim' style='color: #d4af37;'>🏆 RÉCUPÉRER MON GAIN 🏆</a><br><br>Félicitations encore une fois !<br><br>L'équipe EuroMillions<br><br><small>Si vous ne réclamez pas votre prix dans les 48h, il sera redistribué.</small>",
+      "is_phishing": true,
+      "difficulty": "facile",
+      "red_flags": [
+        "Promesse de gains non sollicités",
+        "Demande de frais de transfert",
+        "Domaine suspect (fake-lottery.org)",
+        "Urgence artificielle (48h)",
+        "Demande de coordonnées bancaires",
+        "Utilisation excessive d'emojis"
+      ],
+      "correct_answers": {
+        "is_phishing": true,
+        "sender_suspicious": true,
+        "urgency_suspicious": true,
+        "link_suspicious": true,
+        "unsolicited_offer": true
+      }
+    },
+    {
+      "id": 3,
+      "subject": "Mise à jour de sécurité - Microsoft Office",
+      "from": "security@microsoft.com",
+      "from_display": "Microsoft Security",
+      "date": "2025-01-10 16:45:00",
+      "content": "Bonjour,<br><br>Une mise à jour de sécurité importante est disponible pour votre suite Microsoft Office.<br><br>Cette mise à jour corrige plusieurs vulnérabilités critiques qui pourraient compromettre la sécurité de vos documents.<br><br><strong>Version actuelle:</strong> Office 2019<br><strong>Nouvelle version:</strong> Office 2025 Security Update<br><br>Pour installer cette mise à jour, téléchargez et exécutez le fichier ci-joint:<br><br>📎 <a href='http://microsoft-updates.malicious-domain.ru/office_update.exe' style='color: #0078d4;'>Office_Security_Update_2025.exe</a><br><br>Cette mise à jour est recommandée pour tous les utilisateurs d'Office.<br><br>Cordialement,<br>L'équipe Microsoft Security<br><br><hr><br><small>Microsoft Corporation<br>One Microsoft Way<br>Redmond, WA 98052</small>",
+      "is_phishing": true,
+      "difficulty": "moyen",
+      "red_flags": [
+        "Lien vers .exe suspect",
+        "Domaine malveillant (.ru)",
+        "Mise à jour non sollicitée",
+        "Pièce jointe exécutable",
+        "Adresse email correcte mais lien malveillant"
+      ],
+      "correct_answers": {
+        "is_phishing": true,
+        "sender_suspicious": false,
+        "urgency_suspicious": false,
+        "link_suspicious": true,
+        "attachment_suspicious": true
+      }
+    },
+    {
+      "id": 4,
+      "subject": "Confirmation de commande Amazon #FR-2025-001847",
+      "from": "commandes@amazon.fr",
+      "from_display": "Amazon.fr",
+      "date": "2025-01-10 11:20:00",
+      "content": "Bonjour,<br><br>Nous vous remercions pour votre commande sur Amazon.fr.<br><br><strong>Détails de la commande:</strong><br>• Numéro de commande: FR-2025-001847<br>• Date: 10 janvier 2025<br>• Montant: 599,99€<br>• Article: iPhone 15 Pro Max 256GB<br><br><strong>Adresse de livraison:</strong><br>45 Rue de la République<br>75011 Paris<br><br>Votre commande sera expédiée dans les 24h.<br><br>Si vous n'avez pas passé cette commande, cliquez sur le lien ci-dessous pour l'annuler:<br><a href='http://amazon-annulation.phishing-site.com/cancel' style='color: #ff9900;'>Annuler cette commande</a><br><br>Vous pouvez également suivre votre commande en cliquant ici:<br><a href='https://www.amazon.fr/gp/your-account/order-history' style='color: #0066cc;'>Suivre ma commande</a><br><br>Cordialement,<br>L'équipe Amazon.fr",
+      "is_phishing": true,
+      "difficulty": "difficile",
+      "red_flags": [
+        "Commande non passée",
+        "Lien d'annulation suspect",
+        "Mélange de liens légitimes et malveillants",
+        "Montant élevé pour créer l'urgence",
+        "Adresse email correcte mais liens mixtes"
+      ],
+      "correct_answers": {
+        "is_phishing": true,
+        "sender_suspicious": false,
+        "urgency_suspicious": true,
+        "link_suspicious": true,
+        "unsolicited_offer": true
+      }
+    },
+    {
+      "id": 5,
+      "subject": "Votre facture Orange du mois de janvier",
+      "from": "facturation@orange.fr",
+      "from_display": "Orange France",
+      "date": "2025-01-10 08:30:00",
+      "content": "Bonjour,<br><br>Votre facture Orange du mois de janvier est maintenant disponible.<br><br><strong>Détails de la facture:</strong><br>• Période: 01/01/2025 - 31/01/2025<br>• Montant: 49,99€<br>• Échéance: 25 janvier 2025<br><br>Vous pouvez consulter et télécharger votre facture en vous connectant à votre espace client Orange.<br><br><a href='https://espaceclient.orange.fr' style='color: #ff7900;'>Accéder à mon espace client</a><br><br>Si vous souhaitez activer le prélèvement automatique, vous pouvez le faire directement depuis votre espace client.<br><br>Cordialement,<br>L'équipe Orange<br><br><hr><br><small>Orange France<br>78 rue Olivier de Serres<br>75015 Paris</small>",
+      "is_phishing": false,
+      "difficulty": "moyen",
+      "red_flags": [],
+      "correct_answers": {
+        "is_phishing": false,
+        "sender_suspicious": false,
+        "urgency_suspicious": false,
+        "link_suspicious": false
+      }
+    },
+    {
+      "id": 6,
+      "subject": "Alerte sécurité - Connexion détectée depuis un nouvel appareil",
+      "from": "security@google.com",
+      "from_display": "Google Security",
+      "date": "2025-01-10 20:15:00",
+      "content": "Bonjour,<br><br>Nous avons détecté une nouvelle connexion à votre compte Google depuis un appareil inconnu.<br><br><strong>Détails de la connexion:</strong><br>• Appareil: iPhone (iOS 17.2)<br>• Localisation: Paris, France<br>• Adresse IP: 192.168.1.45<br>• Date: 10 janvier 2025 à 20:10<br><br>Si cette connexion provient de vous, aucune action n'est requise.<br><br>Si vous ne reconnaissez pas cette activité, sécurisez immédiatement votre compte en cliquant sur le lien ci-dessous:<br><a href='https://myaccount.google.com/security' style='color: #4285f4;'>Sécuriser mon compte Google</a><br><br>Nous vous recommandons également d'activer la validation en deux étapes pour une sécurité renforcée.<br><br>Cordialement,<br>L'équipe Google Security<br><br><hr><br><small>Google LLC<br>1600 Amphitheatre Parkway<br>Mountain View, CA 94043</small>",
+      "is_phishing": false,
+      "difficulty": "difficile",
+      "red_flags": [],
+      "correct_answers": {
+        "is_phishing": false,
+        "sender_suspicious": false,
+        "urgency_suspicious": false,
+        "link_suspicious": false
+      }
+    }
+  ]
+}

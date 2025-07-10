@@ -1,0 +1,251 @@
+/* Email Detail Styles */
+.email-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.email-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.back-button a {
+    text-decoration: none;
+}
+
+.email-actions button {
+    font-size: 1rem;
+}
+
+.email-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.email-meta {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.email-subject {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.email-subject h1 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+    flex: 1;
+}
+
+.phishing-indicator {
+    background: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.email-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sender-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sender-avatar {
+    font-size: 2.5rem;
+    color: #6c757d;
+}
+
+.sender-details {
+    line-height: 1.4;
+}
+
+.sender-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.sender-email {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.email-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.email-actions-small {
+    display: flex;
+    gap: 1rem;
+}
+
+.email-actions-small i {
+    font-size: 1.2rem;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.email-actions-small i:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.email-body {
+    padding: 2rem;
+}
+
+.email-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.email-text a {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.email-text a:hover {
+    text-decoration: underline;
+    background: #fff3cd;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
+.email-text strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.email-text small {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.analysis-tips {
+    margin-top: 2rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.tip i {
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
+.tip strong {
+    color: #333;
+    margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .email-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .email-subject {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .email-info {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .sender-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .email-text {
+        font-size: 1rem;
+    }
+}
+
+/* Indicateurs visuels pour les éléments suspects */
+.email-text a[href*="malicious"],
+.email-text a[href*="phishing"],
+.email-text a[href*="fake"] {
+    background: linear-gradient(90deg, #dc3545, #fd7e14);
+    background-size: 200% 200%;
+    animation: suspiciousGradient 3s ease infinite;
+    color: white !important;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+@keyframes suspiciousGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Style pour les adresses email suspectes */
+.sender-email[data-suspicious="true"] {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    color: #856404 !important;
+}

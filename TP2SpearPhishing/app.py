@@ -1,0 +1,206 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+TP Phishing - Simulateur de Client Mail
+Serveur Flask pour la sensibilisation au phishing
+"""
+
+from flask import Flask, render_template, request, jsonify, redirect, url_for
+import json
+import os
+import webbrowser
+from threading import Timer
+
+app = Flask(__name__)
+
+# Configuration
+EMAILS_FILE = os.path.join(os.path.dirname(__file__), 'emails', 'phishing_emails.json')
+PORT = 5000
+
+def load_emails():
+    """Charge les emails depuis le fichier JSON"""
+    try:
+        with open(EMAILS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"emails": []}
+
+def save_progress(email_id, user_answers):
+    """Sauvegarde les réponses de l'utilisateur"""
+    progress_file = os.path.join(os.path.dirname(__file__), 'progress.json')
+    try:
+        with open(progress_file, 'r', encoding='utf-8') as f:
+            progress = json.load(f)
+    except FileNotFoundError:
+        progress = {}
+    
+    progress[str(email_id)] = user_answers
+    
+    with open(progress_file, 'w', encoding='utf-8') as f:
+        json.dump(progress, f, indent=2, ensure_ascii=False)
+
+def get_completed_emails():
+    """Récupère la liste des emails pour lesquels un quiz a été complété"""
+    progress_file = os.path.join(os.path.dirname(__file__), 'progress.json')
+    try:
+        with open(progress_file, 'r', encoding='utf-8') as f:
+            progress = json.load(f)
+        return list(progress.keys())
+    except FileNotFoundError:
+        return []
+
+@app.route('/')
+def index():
+    """Page d'accueil - Choix du client mail"""
+    return render_template('index.html')
+
+@app.route('/gmail')
+def gmail():
+    """Interface Gmail"""
+    emails_data = load_emails()
+    completed_emails = get_completed_emails()
+    unread_count = len(emails_data['emails']) - len(completed_emails)
+    return render_template('gmail.html', emails=emails_data['emails'], completed_emails=completed_emails, unread_count=unread_count)
+
+@app.route('/outlook')
+def outlook():
+    """Interface Outlook"""
+    emails_data = load_emails()
+    completed_emails = get_completed_emails()
+    unread_count = len(emails_data['emails']) - len(completed_emails)
+    return render_template('outlook.html', emails=emails_data['emails'], completed_emails=completed_emails, unread_count=unread_count)
+
+@app.route('/email/<int:email_id>')
+def view_email(email_id):
+    """Afficher un email spécifique"""
+    emails_data = load_emails()
+    client = request.args.get('client', 'gmail')
+    
+    email = None
+    for e in emails_data['emails']:
+        if e['id'] == email_id:
+            email = e
+            break
+    
+    if not email:
+        return "Email non trouvé", 404
+    
+    return render_template('email_detail.html', email=email, client=client)
+
+@app.route('/analyze/<int:email_id>')
+def analyze_email(email_id):
+    """Page d'analyse d'un email"""
+    emails_data = load_emails()
+    client = request.args.get('client', 'gmail')
+    
+    email = None
+    for e in emails_data['emails']:
+        if e['id'] == email_id:
+            email = e
+            break
+    
+    if not email:
+        return "Email non trouvé", 404
+    
+    return render_template('analyze.html', email=email, client=client)
+
+@app.route('/submit_analysis', methods=['POST'])
+def submit_analysis():
+    """Traiter les réponses d'analyse"""
+    data = request.get_json()
+    email_id = data.get('email_id')
+    answers = data.get('answers', {})
+    
+    # Sauvegarder les réponses
+    save_progress(email_id, answers)
+    
+    # Charger l'email pour obtenir les bonnes réponses
+    emails_data = load_emails()
+    email = None
+    for e in emails_data['emails']:
+        if e['id'] == email_id:
+            email = e
+            break
+    
+    if not email:
+        return jsonify({'error': 'Email non trouvé'}), 404
+    
+    # Calculer le score
+    correct_answers = email.get('correct_answers', {})
+    score = 0
+    total = len(correct_answers)
+    
+    for question, correct_answer in correct_answers.items():
+        if answers.get(question) == correct_answer:
+            score += 1
+    
+    return jsonify({
+        'score': score,
+        'total': total,
+        'percentage': round((score / total) * 100) if total > 0 else 0,
+        'correct_answers': correct_answers,
+        'user_answers': answers,
+        'email_completed': True
+    })
+
+@app.route('/results')
+def results():
+    """Page des résultats globaux"""
+    try:
+        with open(os.path.join(os.path.dirname(__file__), 'progress.json'), 'r', encoding='utf-8') as f:
+            progress = json.load(f)
+    except FileNotFoundError:
+        progress = {}
+    
+    return render_template('results.html', progress=progress)
+
+@app.route('/reset_progress', methods=['POST'])
+def reset_progress():
+    """Réinitialiser tous les progrès"""
+    try:
+        print("Route /reset_progress appelée")  # Debug
+        progress_file = os.path.join(os.path.dirname(__file__), 'progress.json')
+        print(f"Fichier de progression: {progress_file}")  # Debug
+        
+        # Supprimer le fichier de progression s'il existe
+        if os.path.exists(progress_file):
+            os.remove(progress_file)
+            print("Fichier progress.json supprimé")  # Debug
+        else:
+            print("Aucun fichier progress.json trouvé")  # Debug
+        
+        return jsonify({
+            'success': True,
+            'message': 'Tous les progrès ont été réinitialisés avec succès.'
+        })
+    except Exception as e:
+        print(f"Erreur dans reset_progress: {e}")  # Debug
+        return jsonify({
+            'success': False,
+            'message': f'Erreur lors de la réinitialisation: {str(e)}'
+        }), 500
+
+@app.route('/test_reset', methods=['GET'])
+def test_reset():
+    """Test de la route reset"""
+    return jsonify({
+        'message': 'Route de reset accessible',
+        'methods': ['POST'],
+        'endpoint': '/reset_progress'
+    })
+
+def open_browser():
+    """Ouvre automatiquement le navigateur"""
+    webbrowser.open(f'http://localhost:{PORT}')
+
+if __name__ == '__main__':
+    # Ouvrir le navigateur après 1 seconde
+    Timer(1, open_browser).start()
+    
+    print(f"🎯 TP Phishing - Simulateur de Client Mail")
+    print(f"🌐 Serveur démarré sur http://localhost:{PORT}")
+    print(f"📧 Interface Gmail: http://localhost:{PORT}/gmail")
+    print(f"📧 Interface Outlook: http://localhost:{PORT}/outlook")
+    print(f"🔍 Appuyez sur Ctrl+C pour arrêter")
+    
+    app.run(host='0.0.0.0', port=PORT, debug=True, use_reloader=False)

@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}Gmail - TP Phishing{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/gmail.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="gmail-container">
+    <div class="gmail-header">
+        <div class="gmail-logo">
+            <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r2.png" alt="Gmail" height="40">
+        </div>
+        <div class="gmail-search">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher dans Gmail" readonly>
+            </div>
+        </div>
+        <div class="gmail-account">
+            <i class="fas fa-user-circle" style="font-size: 2rem; color: #4285f4;"></i>
+        </div>
+    </div>
+    
+    <div class="gmail-content">
+        <div class="gmail-sidebar">
+            <div class="compose-btn">
+                <i class="fas fa-plus"></i>
+                Nouveau message
+            </div>
+            
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-inbox"></i>
+                    <span>Boîte de réception</span>
+                    <span class="count" id="unread-count">{{ unread_count }}</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-star"></i>
+                    <span>Messages suivis</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Messages envoyés</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Brouillons</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-trash"></i>
+                    <span>Corbeille</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Spam</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gmail-main">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <input type="checkbox" id="select-all">
+                    <i class="fas fa-redo-alt" title="Actualiser"></i>
+                    <i class="fas fa-trash" title="Supprimer"></i>
+                    <i class="fas fa-exclamation-triangle" title="Signaler comme spam"></i>
+                </div>
+                <div class="toolbar-right">
+                    <span class="pagination">1-{{ emails|length }} sur {{ emails|length }}</span>
+                    <i class="fas fa-chevron-left"></i>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            
+            <div class="email-list">
+                {% for email in emails %}
+                {% set is_completed = email.id|string in completed_emails %}
+                <div class="email-item {{ 'email-read' if is_completed else 'email-unread' }}" data-email-id="{{ email.id }}">
+                    <div class="email-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="email-star">
+                        <i class="far fa-star"></i>
+                    </div>
+                    <div class="email-sender">
+                        {{ email.from_display }}
+                    </div>
+                    <div class="email-subject">
+                        <span class="subject-text">{{ email.subject }}</span>
+                        {% if email.is_phishing %}
+                        <span class="phishing-badge" title="Cet email est une tentative de phishing">⚠️</span>
+                        {% endif %}
+                        {% if is_completed %}
+                        <span class="completed-badge" title="Quiz complété">✓</span>
+                        {% endif %}
+                    </div>
+                    <div class="email-date">
+                        {{ email.date.split(' ')[1].split(':')[0] }}:{{ email.date.split(' ')[1].split(':')[1] }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Synchroniser avec le localStorage pour les emails complétés
+    console.log('Chargement de la page Gmail - synchronisation...');
+    syncCompletedEmails();
+    
+    // Force une nouvelle synchronisation après un court délai
+    setTimeout(syncCompletedEmails, 500);
+    
+    // Gestion du clic sur les emails
+    document.querySelectorAll('.email-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const emailId = this.getAttribute('data-email-id');
+            window.location.href = `/email/${emailId}?client=gmail`;
+        });
+    });
+    
+    function syncCompletedEmails() {
+        const completedEmails = JSON.parse(localStorage.getItem('completedEmails') || '[]');
+        let unreadCount = 0;
+        
+        // Parcourir tous les emails pour mettre à jour leur statut
+        document.querySelectorAll('.email-item').forEach(function(emailItem) {
+            const emailId = emailItem.getAttribute('data-email-id');
+            const isCompleted = completedEmails.includes(emailId);
+            
+            if (isCompleted) {
+                // Marquer comme lu
+                emailItem.classList.remove('email-unread');
+                emailItem.classList.add('email-read');
+                
+                // Ajouter le badge complété s'il n'existe pas
+                const subject = emailItem.querySelector('.email-subject');
+                if (subject && !subject.querySelector('.completed-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'completed-badge';
+                    badge.title = 'Quiz complété';
+                    badge.textContent = '✓';
+                    subject.appendChild(badge);
+                }
+            } else {
+                // Marquer comme non lu
+                emailItem.classList.remove('email-read');
+                emailItem.classList.add('email-unread');
+                unreadCount++;
+                
+                // Supprimer le badge s'il existe
+                const existingBadge = emailItem.querySelector('.completed-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+            }
+        });
+        
+        // Mettre à jour le compteur
+        const countElement = document.getElementById('unread-count');
+        if (countElement) {
+            countElement.textContent = unreadCount;
+        }
+        
+        console.log('Synchronisation Gmail:', {
+            completedEmails,
+            unreadCount,
+            totalEmails: document.querySelectorAll('.email-item').length,
+            localStorageRaw: localStorage.getItem('completedEmails')
+        });
+    }
+    
+    // Écouter les changements du localStorage depuis d'autres onglets/pages
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'completedEmails') {
+            console.log('Changement détecté dans localStorage');
+            syncCompletedEmails();
+        }
+    });
+    
+    // Synchronisation forcée à intervalles réguliers
+    setInterval(syncCompletedEmails, 1000);
+    
+    // Fonction de test disponible dans la console
+    window.testEmailCompletion = function(emailId) {
+        console.log('Test manuel - marquage email', emailId, 'comme complété');
+        let completedEmails = JSON.parse(localStorage.getItem('completedEmails') || '[]');
+        if (!completedEmails.includes(emailId.toString())) {
+            completedEmails.push(emailId.toString());
+            localStorage.setItem('completedEmails', JSON.stringify(completedEmails));
+            console.log('Email ajouté manuellement:', completedEmails);
+            syncCompletedEmails();
+        }
+    };
+    
+    window.clearCompletedEmails = function() {
+        localStorage.removeItem('completedEmails');
+        console.log('localStorage vidé');
+        syncCompletedEmails();
+    };
+    
+    console.log('Fonctions de test disponibles: testEmailCompletion(id), clearCompletedEmails()');
+    
+    // Gestion des étoiles
+    document.querySelectorAll('.email-star i').forEach(function(star) {
+        star.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (this.classList.contains('far')) {
+                this.classList.remove('far');
+                this.classList.add('fas');
+                this.style.color = '#fbbc04';
+            } else {
+                this.classList.remove('fas');
+                this.classList.add('far');
+                this.style.color = '#5f6368';
+            }
+        });
+    });
+    
+    // Gestion des checkboxes
+    document.querySelectorAll('.email-checkbox input').forEach(function(checkbox) {
+        checkbox.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+    
+    // Simulation du hover pour voir les badges de phishing
+    document.querySelectorAll('.email-item').forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+            const badge = this.querySelector('.phishing-badge');
+            if (badge) {
+                badge.style.opacity = '1';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            const badge = this.querySelector('.phishing-badge');
+            if (badge) {
+                badge.style.opacity = '0';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

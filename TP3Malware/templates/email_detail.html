@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}{{ email.subject }} - TP Phishing{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/email_detail.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="email-container">
+    <div class="email-header">
+        <div class="back-button">
+            <a href="{{ url_for('gmail') if client == 'gmail' else url_for('outlook') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Retour à la boîte de réception
+            </a>
+        </div>
+        <div class="email-actions">
+            <button class="btn btn-danger" onclick="analyzeEmail()">
+                <i class="fas fa-search"></i> Analyser cet email
+            </button>
+        </div>
+    </div>
+    
+    <div class="email-content">
+        <div class="email-meta">
+            <div class="email-subject">
+                <h1>{{ email.subject }}</h1>
+                {% if email.is_phishing %}
+                <span class="phishing-indicator" title="Cet email est une tentative de phishing">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Email suspect
+                </span>
+                {% endif %}
+            </div>
+            
+            <div class="email-info">
+                <div class="sender-info">
+                    <div class="sender-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="sender-details">
+                        <div class="sender-name">{{ email.from_display }}</div>
+                        <div class="sender-email">{{ email.from }}</div>
+                        <div class="email-date">{{ email.date }}</div>
+                    </div>
+                </div>
+                
+                <div class="email-actions-small">
+                    <i class="fas fa-reply" title="Répondre"></i>
+                    <i class="fas fa-forward" title="Transférer"></i>
+                    <i class="fas fa-trash" title="Supprimer"></i>
+                    <i class="fas fa-exclamation-triangle" title="Signaler comme spam"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="email-body">
+            <div class="email-text">
+                {{ email.content|safe }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="analysis-tips">
+        <div class="card">
+            <h3><i class="fas fa-lightbulb"></i> Conseils d'analyse</h3>
+            <div class="tips-grid">
+                <div class="tip">
+                    <i class="fas fa-envelope"></i>
+                    <strong>Expéditeur :</strong> Vérifiez l'adresse email et le nom affiché
+                </div>
+                <div class="tip">
+                    <i class="fas fa-link"></i>
+                    <strong>Liens :</strong> Survolez les liens pour voir leur vraie destination
+                </div>
+                <div class="tip">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Urgence :</strong> Méfiez-vous des messages urgents ou menaçants
+                </div>
+                <div class="tip">
+                    <i class="fas fa-spell-check"></i>
+                    <strong>Contenu :</strong> Cherchez les fautes d'orthographe et de grammaire
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function analyzeEmail() {
+    window.location.href = `/analyze/{{ email.id }}?client={{ client }}`;
+}
+
+// Afficher les vraies destinations des liens au survol
+document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.email-text a');
+    
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const url = this.getAttribute('href');
+            const modal = document.createElement('div');
+            modal.className = 'link-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3><i class="fas fa-link"></i> Destination du lien</h3>
+                    <p><strong>URL visible :</strong> ${this.textContent}</p>
+                    <p><strong>Vraie destination :</strong> <code>${url}</code></p>
+                    <div class="modal-actions">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="btn btn-primary">
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        });
+        
+        // Ajouter un indicateur visuel pour les liens suspects
+        const href = link.getAttribute('href');
+        if (href && (href.includes('malicious') || href.includes('phishing') || href.includes('fake'))) {
+            link.style.borderBottom = '2px solid #dc3545';
+            link.title = 'Lien suspect détecté !';
+        }
+    });
+});
+</script>
+
+<style>
+.link-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.modal-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.modal-content code {
+    background: #f8f9fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #dc3545;
+}
+
+.modal-actions {
+    text-align: right;
+    margin-top: 1.5rem;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,494 @@
+{% extends "base.html" %}
+
+{% block title %}Résultats - TP Phishing{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="card">
+        <h1 style="text-align: center; margin-bottom: 2rem;">
+            <i class="fas fa-chart-bar"></i> Tableau de Bord - Résultats
+        </h1>
+        
+        {% if progress %}
+        <div class="progress-summary">
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ progress|length }}</div>
+                    <div class="stat-label">Emails analysés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="average-score">0%</div>
+                    <div class="stat-label">Score moyen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ progress|length }}</div>
+                    <div class="stat-label">Quiz complétés</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="detailed-results">
+            <h2><i class="fas fa-list"></i> Détail des Analyses</h2>
+            
+            {% for email_id, answers in progress.items() %}
+            <div class="result-item">
+                <div class="result-header">
+                    <h3>Email #{{ email_id }}</h3>
+                    <div class="result-score" data-score="{{ (answers.values()|map('int')|sum / answers|length * 100)|round|int }}">
+                        Score: {{ (answers.values()|map('int')|sum / answers|length * 100)|round|int }}%
+                    </div>
+                </div>
+                
+                <div class="result-details">
+                    <div class="answers-grid">
+                        {% for question, answer in answers.items() %}
+                        <div class="answer-item">
+                            <div class="question-name">
+                                {% if question == 'is_phishing' %}
+                                    Email suspect ?
+                                {% elif question == 'sender_suspicious' %}
+                                    Expéditeur suspect ?
+                                {% elif question == 'urgency_suspicious' %}
+                                    Urgence suspecte ?
+                                {% elif question == 'link_suspicious' %}
+                                    Liens suspects ?
+                                {% elif question == 'unsolicited_offer' %}
+                                    Offre non sollicitée ?
+                                {% elif question == 'attachment_suspicious' %}
+                                    Pièces jointes suspectes ?
+                                {% else %}
+                                    {{ question.replace('_', ' ').title() }}
+                                {% endif %}
+                            </div>
+                            <div class="answer-value {{ 'correct' if answer else 'incorrect' }}">
+                                {{ 'Oui' if answer else 'Non' }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% else %}
+        <div class="no-results">
+            <div style="text-align: center; padding: 3rem;">
+                <i class="fas fa-inbox" style="font-size: 4rem; color: #6c757d; margin-bottom: 1rem;"></i>
+                <h3 style="color: #6c757d; margin-bottom: 1rem;">Aucun résultat disponible</h3>
+                <p style="color: #6c757d; margin-bottom: 2rem;">
+                    Vous n'avez pas encore analysé d'emails. Commencez par analyser quelques emails pour voir vos résultats ici.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="{{ url_for('gmail') }}" class="btn btn-primary">
+                        <i class="fab fa-google"></i> Interface Gmail
+                    </a>
+                    <a href="{{ url_for('outlook') }}" class="btn btn-primary">
+                        <i class="fab fa-microsoft"></i> Interface Outlook
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="card">
+        <h2><i class="fas fa-graduation-cap"></i> Conseils d'Amélioration</h2>
+        
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="tip-content">
+                    <h4>Vérifiez l'expéditeur</h4>
+                    <p>Examinez attentivement l'adresse email et le nom affiché. Les cybercriminels utilisent souvent des domaines similaires aux vrais.</p>
+                </div>
+            </div>
+            
+            <div class="tip-card">
+                <div class="tip-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <div class="tip-content">
+                    <h4>Analysez les liens</h4>
+                    <p>Survolez les liens pour voir leur vraie destination. Ne cliquez jamais sur un lien suspect.</p>
+                </div>
+            </div>
+            
+            <div class="tip-card">
+                <div class="tip-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="tip-content">
+                    <h4>Méfiez-vous de l'urgence</h4>
+                    <p>Les emails de phishing utilisent souvent l'urgence pour vous pousser à agir rapidement sans réfléchir.</p>
+                </div>
+            </div>
+            
+            <div class="tip-card">
+                <div class="tip-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="tip-content">
+                    <h4>Protégez vos données</h4>
+                    <p>Ne communiquez jamais vos informations personnelles ou financières par email.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2><i class="fas fa-redo"></i> Continuer l'Entraînement</h2>
+        <p>Plus vous vous entraînez, mieux vous devenez dans la détection du phishing. Analysez d'autres emails pour améliorer vos compétences !</p>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+            <a href="{{ url_for('gmail') }}" class="btn btn-primary">
+                <i class="fab fa-google"></i> Continuer avec Gmail
+            </a>
+            <a href="{{ url_for('outlook') }}" class="btn btn-primary">
+                <i class="fab fa-microsoft"></i> Continuer avec Outlook
+            </a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2><i class="fas fa-trash-alt"></i> Réinitialisation</h2>
+        <p>Vous pouvez remettre à zéro tous vos progrès pour recommencer l'entraînement depuis le début.</p>
+        
+        <div class="reset-section">
+            <div class="alert alert-warning">
+                <strong><i class="fas fa-exclamation-triangle"></i> Attention :</strong>
+                Cette action supprimera définitivement tous vos résultats et progrès. Cette action est irréversible.
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="resetButton" class="btn btn-danger" onclick="confirmReset()">
+                    <i class="fas fa-trash-alt"></i> Remettre à zéro tous les progrès
+                </button>
+                
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-secondary" onclick="testResetRoute()" style="font-size: 0.9rem;">
+                        <i class="fas fa-flask"></i> Tester la route de reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.results-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.progress-summary {
+    margin-bottom: 2rem;
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.detailed-results {
+    margin-top: 2rem;
+}
+
+.result-item {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #007bff;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.result-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.result-score {
+    background: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.answers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.answer-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.question-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.answer-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.answer-value.correct {
+    color: #28a745;
+}
+
+.answer-value.incorrect {
+    color: #dc3545;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.tip-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.tip-icon {
+    background: #007bff;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.tip-content h4 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+}
+
+.tip-content p {
+    margin: 0;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+}
+
+.reset-section {
+    margin-top: 1rem;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-danger:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .result-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .summary-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .answers-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+// Calculer le score moyen correct
+document.addEventListener('DOMContentLoaded', function() {
+    calculateAverageScore();
+});
+
+function calculateAverageScore() {
+    const scoreElements = document.querySelectorAll('.result-score[data-score]');
+    const averageScoreElement = document.getElementById('average-score');
+    
+    if (scoreElements.length === 0) {
+        averageScoreElement.textContent = '0%';
+        return;
+    }
+    
+    let totalScore = 0;
+    let count = 0;
+    
+    scoreElements.forEach(function(element) {
+        const score = parseInt(element.getAttribute('data-score'));
+        if (!isNaN(score)) {
+            totalScore += score;
+            count++;
+        }
+    });
+    
+    const averageScore = count > 0 ? Math.round(totalScore / count) : 0;
+    averageScoreElement.textContent = averageScore + '%';
+    
+    console.log('Calcul du score moyen:', {
+        scores: Array.from(scoreElements).map(el => parseInt(el.getAttribute('data-score'))),
+        totalScore,
+        count,
+        averageScore
+    });
+}
+
+function confirmReset() {
+    const confirmed = confirm(
+        '⚠️ ATTENTION ⚠️\n\n' +
+        'Êtes-vous sûr de vouloir supprimer TOUS vos progrès ?\n\n' +
+        '• Tous les résultats de quiz seront perdus\n' +
+        '• Tous les emails redeviendront "non lus"\n' +
+        '• Les statistiques seront remises à zéro\n\n' +
+        'Cette action est IRRÉVERSIBLE !'
+    );
+    
+    if (confirmed) {
+        resetProgress();
+    }
+}
+
+function resetProgress() {
+    const resetButton = document.getElementById('resetButton');
+    resetButton.disabled = true;
+    resetButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Réinitialisation...';
+    
+    // Supprimer le localStorage
+    localStorage.removeItem('completedEmails');
+    console.log('localStorage vidé');
+    
+    // Appeler l\'API pour supprimer les données Flask
+    console.log('Envoi de la requête de reset...');
+    fetch('/reset_progress', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        console.log('Réponse reçue:', response.status, response.statusText);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Données de réponse:', data);
+        if (data.success) {
+            alert('✅ Tous vos progrès ont été réinitialisés avec succès !');
+            
+            // Rediriger vers la page d\'accueil après un court délai
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        } else {
+            alert('❌ Erreur lors de la réinitialisation: ' + data.message);
+            resetButton.disabled = false;
+            resetButton.innerHTML = '<i class="fas fa-trash-alt"></i> Remettre à zéro tous les progrès';
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('❌ Erreur lors de la réinitialisation. Veuillez réessayer.');
+        resetButton.disabled = false;
+        resetButton.innerHTML = '<i class="fas fa-trash-alt"></i> Remettre à zéro tous les progrès';
+    });
+}
+
+function testResetRoute() {
+    console.log('Test de la route de reset...');
+    fetch('/test_reset')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Test réussi:', data);
+            alert('✅ Route de reset accessible: ' + data.message);
+        })
+        .catch(error => {
+            console.error('Test échoué:', error);
+            alert('❌ Route de reset non accessible');
+        });
+}
+
+// Alternative: reset seulement localStorage si l'API ne fonctionne pas
+function resetLocalStorageOnly() {
+    const confirmed = confirm('L\'API de reset ne fonctionne pas.\n\nVoulez-vous au moins vider le localStorage (les emails redeviendront non lus) ?');
+    if (confirmed) {
+        localStorage.removeItem('completedEmails');
+        alert('✅ localStorage vidé ! Rechargez la page pour voir les changements.');
+    }
+}
+</script>
+{% endblock %}

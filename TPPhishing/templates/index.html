@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}TP Phishing - Accueil{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="card">
+        <h1 style="color: #333; margin-bottom: 1rem; text-align: center;">
+            🎯 TP Phishing - Sensibilisation à la Cybersécurité
+        </h1>
+        <p style="font-size: 1.1rem; color: #666; text-align: center; margin-bottom: 2rem;">
+            Apprenez à identifier les tentatives de phishing à travers des simulations réalistes
+        </p>
+        
+        <div class="alert alert-warning">
+            <strong><i class="fas fa-exclamation-triangle"></i> Objectif pédagogique :</strong>
+            Ce TP vous permettra d'apprendre à reconnaître les indices de phishing, du plus évident au plus subtil.
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+            <div class="client-card">
+                <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 8px;">
+                    <i class="fab fa-google" style="font-size: 3rem; color: #4285f4; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #333; margin-bottom: 1rem;">Interface Gmail</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem;">
+                        Simulez l'interface Gmail pour analyser des emails suspects
+                    </p>
+                    <a href="{{ url_for('gmail') }}" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Accéder à Gmail
+                    </a>
+                </div>
+            </div>
+            
+            <div class="client-card">
+                <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 8px;">
+                    <i class="fab fa-microsoft" style="font-size: 3rem; color: #0078d4; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #333; margin-bottom: 1rem;">Interface Outlook</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem;">
+                        Simulez l'interface Outlook pour analyser des emails suspects
+                    </p>
+                    <a href="{{ url_for('outlook') }}" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Accéder à Outlook
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="instructions-section">
+    <div class="card">
+        <h2 style="color: #333; margin-bottom: 1.5rem;">
+            <i class="fas fa-graduation-cap"></i> Instructions du TP
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            <div class="step">
+                <h3 style="color: #007bff; margin-bottom: 0.5rem;">
+                    <span style="background: #007bff; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;">1</span>
+                    Choisir un client
+                </h3>
+                <p style="color: #666;">Sélectionnez Gmail ou Outlook pour commencer l'analyse</p>
+            </div>
+            
+            <div class="step">
+                <h3 style="color: #28a745; margin-bottom: 0.5rem;">
+                    <span style="background: #28a745; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;">2</span>
+                    Analyser les emails
+                </h3>
+                <p style="color: #666;">Examinez chaque email et identifiez les indices suspects</p>
+            </div>
+            
+            <div class="step">
+                <h3 style="color: #dc3545; margin-bottom: 0.5rem;">
+                    <span style="background: #dc3545; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;">3</span>
+                    Répondre aux questions
+                </h3>
+                <p style="color: #666;">Testez vos connaissances avec notre quiz interactif</p>
+            </div>
+            
+            <div class="step">
+                <h3 style="color: #ffc107; margin-bottom: 0.5rem;">
+                    <span style="background: #ffc107; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;">4</span>
+                    Consulter les résultats
+                </h3>
+                <p style="color: #666;">Obtenez votre score et apprenez de vos erreurs</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tips-section">
+    <div class="card">
+        <h2 style="color: #333; margin-bottom: 1.5rem;">
+            <i class="fas fa-lightbulb"></i> Indices de Phishing à Rechercher
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <div class="tip-category">
+                <h3 style="color: #dc3545; margin-bottom: 1rem;">
+                    <i class="fas fa-exclamation-triangle"></i> Indices Évidents
+                </h3>
+                <ul style="color: #666; line-height: 1.8;">
+                    <li>Fautes d'orthographe et de grammaire</li>
+                    <li>Urgence artificielle ("Agissez maintenant!")</li>
+                    <li>Demande d'informations personnelles</li>
+                    <li>Expéditeur inconnu ou suspect</li>
+                </ul>
+            </div>
+            
+            <div class="tip-category">
+                <h3 style="color: #ffc107; margin-bottom: 1rem;">
+                    <i class="fas fa-search"></i> Indices Techniques
+                </h3>
+                <ul style="color: #666; line-height: 1.8;">
+                    <li>Adresse email douteuse</li>
+                    <li>Liens suspects (hover pour voir)</li>
+                    <li>Pièces jointes non attendues</li>
+                    <li>Formatage inhabituel</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hero-section {
+    margin-bottom: 3rem;
+}
+
+.client-card {
+    transition: transform 0.3s ease;
+}
+
+.client-card:hover {
+    transform: translateY(-5px);
+}
+
+.step {
+    padding: 1.5rem;
+    border-left: 4px solid #e9ecef;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.tip-category {
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.tip-category ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.tip-category li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.tip-category li:last-child {
+    border-bottom: none;
+}
+
+.tip-category li:before {
+    content: "→";
+    color: #007bff;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+</style>
+{% endblock %}

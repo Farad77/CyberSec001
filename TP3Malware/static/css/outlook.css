@@ -1,0 +1,596 @@
+/* Outlook Interface Styles */
+.outlook-container {
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.outlook-header {
+    background: #0078d4;
+    color: white;
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    margin: 0;
+}
+
+.outlook-logo {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding-left: 1.5rem;
+}
+
+.outlook-search {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 2rem;
+}
+
+.search-box {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-box i {
+    color: rgba(255,255,255,0.8);
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    outline: none;
+    flex: 1;
+    color: white;
+    font-size: 14px;
+}
+
+.search-box input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.outlook-account {
+    display: flex;
+    align-items: center;
+    padding-right: 1.5rem;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-size: 14px;
+}
+
+.outlook-content {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 48px);
+    background: #f3f2f1;
+}
+
+.outlook-sidebar {
+    width: 280px;
+    background: #ffffff;
+    border-right: 1px solid #edebe9;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.new-mail-btn {
+    background: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.new-mail-btn:hover {
+    background: #106ebe;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,120,212,0.3);
+}
+
+.folder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.folder-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #323130;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.folder-item:hover {
+    background: #f3f2f1;
+}
+
+.folder-item.active {
+    background: #deecf9;
+    color: #0078d4;
+    font-weight: 600;
+}
+
+.folder-item i {
+    width: 16px;
+    text-align: center;
+    color: #605e5c;
+}
+
+.folder-item.active i {
+    color: #0078d4;
+}
+
+.folder-count {
+    margin-left: auto;
+    background: #0078d4;
+    color: white;
+    border-radius: 10px;
+    padding: 0.125rem 0.5rem;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.outlook-main {
+    flex: 1;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.mail-toolbar {
+    background: #f3f2f1;
+    border-bottom: 1px solid #edebe9;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.toolbar-btn {
+    background: none;
+    border: 1px solid #8a8886;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 14px;
+    color: #323130;
+    transition: all 0.3s ease;
+}
+
+.toolbar-btn:hover {
+    background: #f3f2f1;
+    border-color: #605e5c;
+}
+
+.toolbar-options {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sort-select {
+    border: 1px solid #8a8886;
+    border-radius: 4px;
+    padding: 0.5rem;
+    background: white;
+    font-size: 14px;
+}
+
+.view-btn {
+    background: none;
+    border: 1px solid #8a8886;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #323130;
+}
+
+.mail-list {
+    flex: 1;
+    overflow-y: auto;
+    background: #ffffff;
+}
+
+.mail-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #edebe9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 1px solid transparent;
+}
+
+.mail-item:hover {
+    background: #f8f9fa;
+}
+
+.mail-item.selected {
+    background: #deecf9;
+    border-left: 4px solid #0078d4;
+}
+
+.mail-checkbox {
+    width: 20px;
+    margin-right: 1rem;
+}
+
+.mail-checkbox input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #0078d4;
+}
+
+.mail-importance {
+    width: 20px;
+    margin-right: 1rem;
+}
+
+.mail-importance i {
+    color: #8a8886;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.mail-importance i:hover {
+    color: #d13438;
+}
+
+.mail-sender {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 200px;
+    margin-right: 1rem;
+}
+
+.sender-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0078d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.sender-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.sender-name {
+    font-weight: 600;
+    color: #323130;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sender-email {
+    color: #605e5c;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mail-content {
+    flex: 1;
+    margin-right: 1rem;
+    overflow: hidden;
+}
+
+.mail-subject {
+    font-weight: 600;
+    color: #323130;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mail-preview {
+    color: #605e5c;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.phishing-warning {
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    cursor: help;
+}
+
+.mail-item:hover .phishing-warning {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.mail-date {
+    width: 80px;
+    text-align: right;
+    color: #605e5c;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .outlook-sidebar {
+        width: 240px;
+    }
+    
+    .outlook-search {
+        margin: 0 1rem;
+    }
+    
+    .mail-sender {
+        width: 150px;
+    }
+    
+    .mail-date {
+        width: 60px;
+    }
+    
+    .toolbar-actions {
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    
+    .toolbar-btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .outlook-sidebar {
+        position: absolute;
+        left: -280px;
+        z-index: 1000;
+        height: 100%;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    }
+    
+    .outlook-main {
+        width: 100%;
+    }
+    
+    .mail-sender {
+        width: 120px;
+    }
+    
+    .mail-date {
+        display: none;
+    }
+    
+    .sender-email {
+        display: none;
+    }
+    
+    .toolbar-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .toolbar-options {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Styles pour les emails lus/non lus */
+.mail-item.mail-unread {
+    font-weight: bold;
+    background: #ffffff;
+    border-left: 4px solid #0078d4;
+}
+
+.mail-item.mail-unread .sender-name {
+    font-weight: 700;
+    color: #323130;
+}
+
+.mail-item.mail-unread .mail-subject {
+    font-weight: 600;
+    color: #323130;
+}
+
+.mail-item.mail-unread .mail-preview {
+    font-weight: 400;
+    color: #323130;
+}
+
+.mail-item.mail-read {
+    font-weight: normal;
+    background: #f8f9fa;
+    border-left: 1px solid #edebe9;
+}
+
+.mail-item.mail-read .sender-name {
+    font-weight: 400;
+    color: #605e5c;
+}
+
+.mail-item.mail-read .mail-subject {
+    font-weight: 400;
+    color: #605e5c;
+}
+
+.mail-item.mail-read .mail-preview {
+    color: #8a8886;
+}
+
+.mail-item.mail-read .mail-date {
+    color: #8a8886;
+}
+
+/* Badge pour les quiz complétés Outlook */
+.completed-badge-outlook {
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 0.5rem;
+    animation: completedPulseOutlook 2s ease-in-out;
+}
+
+@keyframes completedPulseOutlook {
+    0% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    70% { 
+        transform: scale(1.15);
+        box-shadow: 0 0 0 8px rgba(40, 167, 69, 0);
+    }
+    100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* Hover différencié pour les emails lus/non lus */
+.mail-item.mail-unread:hover {
+    background: #deecf9;
+    border-left: 4px solid #106ebe;
+    box-shadow: 0 2px 8px rgba(16, 110, 190, 0.15);
+}
+
+.mail-item.mail-read:hover {
+    background: #f3f2f1;
+    border-left: 1px solid #8a8886;
+    box-shadow: 0 1px 4px rgba(138, 136, 134, 0.1);
+}
+
+/* Indicateur de statut dans l'avatar pour les emails non lus */
+.mail-item.mail-unread .sender-avatar {
+    background: linear-gradient(135deg, #0078d4, #106ebe);
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0078d4;
+}
+
+.mail-item.mail-read .sender-avatar {
+    background: #8a8886;
+    box-shadow: none;
+}
+
+/* Animation d'entrée différenciée */
+.mail-item.mail-unread {
+    animation: slideInUnread 0.4s ease-out;
+}
+
+.mail-item.mail-read {
+    animation: slideInRead 0.3s ease-out;
+}
+
+@keyframes slideInUnread {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+        border-left-width: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        border-left-width: 4px;
+    }
+}
+
+@keyframes slideInRead {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mail-item {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Styles pour les emails de phishing */
+.mail-item[data-email-id="1"] .sender-avatar,
+.mail-item[data-email-id="2"] .sender-avatar,
+.mail-item[data-email-id="3"] .sender-avatar,
+.mail-item[data-email-id="4"] .sender-avatar {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+}
+
+.mail-item[data-email-id="5"] .sender-avatar,
+.mail-item[data-email-id="6"] .sender-avatar {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}

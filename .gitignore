@@ -1,0 +1,57 @@
+# Claude Code instructions
+CLAUDE.md
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Flask
+instance/
+.webassets-cache
+*.db
+*.sqlite
+
+# Progress files
+*/progress.json
+
+# Vagrant
+.vagrant/
+*.log
+
+# VPN configurations (contains secrets)
+config/
+*.ovpn
+*.ovpn.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Screenshots and test files
+*.jpg
+*.png
+*.gif
+*.pdf

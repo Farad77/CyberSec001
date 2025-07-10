@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}Outlook - TP Phishing{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/outlook.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="outlook-container">
+    <div class="outlook-header">
+        <div class="outlook-logo">
+            <i class="fab fa-microsoft" style="color: #0078d4; font-size: 1.8rem;"></i>
+            <span style="color: #0078d4; font-weight: 600; font-size: 1.2rem; margin-left: 0.5rem;">Outlook</span>
+        </div>
+        <div class="outlook-search">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher dans le courrier" readonly>
+            </div>
+        </div>
+        <div class="outlook-account">
+            <div class="account-info">
+                <i class="fas fa-user-circle" style="font-size: 2rem; color: #0078d4;"></i>
+                <span>Utilisateur TP</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="outlook-content">
+        <div class="outlook-sidebar">
+            <div class="new-mail-btn">
+                <i class="fas fa-plus"></i>
+                Nouveau message
+            </div>
+            
+            <div class="folder-list">
+                <div class="folder-item active">
+                    <i class="fas fa-inbox"></i>
+                    <span>Boîte de réception</span>
+                    <span class="folder-count" id="unread-count-outlook">{{ unread_count }}</span>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Éléments envoyés</span>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Brouillons</span>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-trash"></i>
+                    <span>Éléments supprimés</span>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Courrier indésirable</span>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-archive"></i>
+                    <span>Archive</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="outlook-main">
+            <div class="mail-toolbar">
+                <div class="toolbar-actions">
+                    <button class="toolbar-btn">
+                        <i class="fas fa-trash"></i>
+                        Supprimer
+                    </button>
+                    <button class="toolbar-btn">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Courrier indésirable
+                    </button>
+                    <button class="toolbar-btn">
+                        <i class="fas fa-archive"></i>
+                        Archiver
+                    </button>
+                    <button class="toolbar-btn">
+                        <i class="fas fa-redo"></i>
+                        Actualiser
+                    </button>
+                </div>
+                <div class="toolbar-options">
+                    <select class="sort-select">
+                        <option>Trier par date</option>
+                        <option>Trier par expéditeur</option>
+                        <option>Trier par objet</option>
+                    </select>
+                    <button class="view-btn">
+                        <i class="fas fa-th-list"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mail-list">
+                {% for email in emails %}
+                {% set is_completed = email.id|string in completed_emails %}
+                <div class="mail-item {{ 'mail-read' if is_completed else 'mail-unread' }}" data-email-id="{{ email.id }}">
+                    <div class="mail-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="mail-importance">
+                        <i class="far fa-flag"></i>
+                    </div>
+                    <div class="mail-sender">
+                        <div class="sender-avatar">
+                            <span>{{ email.from_display[0] }}</span>
+                        </div>
+                        <div class="sender-info">
+                            <div class="sender-name">{{ email.from_display }}</div>
+                            <div class="sender-email">{{ email.from }}</div>
+                        </div>
+                    </div>
+                    <div class="mail-content">
+                        <div class="mail-subject">
+                            {{ email.subject }}
+                            {% if email.is_phishing %}
+                            <span class="phishing-warning" title="Email suspect détecté">⚠️</span>
+                            {% endif %}
+                            {% if is_completed %}
+                            <span class="completed-badge-outlook" title="Quiz complété">✓</span>
+                            {% endif %}
+                        </div>
+                        <div class="mail-preview">
+                            {{ email.content|striptags|truncate(100) }}
+                        </div>
+                    </div>
+                    <div class="mail-date">
+                        {{ email.date.split(' ')[1].split(':')[0] }}:{{ email.date.split(' ')[1].split(':')[1] }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Synchroniser avec le localStorage pour les emails complétés
+    console.log('Chargement de la page Outlook - synchronisation...');
+    syncCompletedEmails();
+    
+    // Force une nouvelle synchronisation après un court délai
+    setTimeout(syncCompletedEmails, 500);
+    
+    // Gestion du clic sur les emails
+    document.querySelectorAll('.mail-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const emailId = this.getAttribute('data-email-id');
+            window.location.href = `/email/${emailId}?client=outlook`;
+        });
+    });
+    
+    function syncCompletedEmails() {
+        const completedEmails = JSON.parse(localStorage.getItem('completedEmails') || '[]');
+        let unreadCount = 0;
+        
+        // Parcourir tous les emails pour mettre à jour leur statut
+        document.querySelectorAll('.mail-item').forEach(function(mailItem) {
+            const emailId = mailItem.getAttribute('data-email-id');
+            const isCompleted = completedEmails.includes(emailId);
+            
+            if (isCompleted) {
+                // Marquer comme lu
+                mailItem.classList.remove('mail-unread');
+                mailItem.classList.add('mail-read');
+                
+                // Ajouter le badge complété s'il n'existe pas
+                const subject = mailItem.querySelector('.mail-subject');
+                if (subject && !subject.querySelector('.completed-badge-outlook')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'completed-badge-outlook';
+                    badge.title = 'Quiz complété';
+                    badge.textContent = '✓';
+                    subject.appendChild(badge);
+                }
+            } else {
+                // Marquer comme non lu
+                mailItem.classList.remove('mail-read');
+                mailItem.classList.add('mail-unread');
+                unreadCount++;
+                
+                // Supprimer le badge s'il existe
+                const existingBadge = mailItem.querySelector('.completed-badge-outlook');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+            }
+        });
+        
+        // Mettre à jour le compteur
+        const countElement = document.getElementById('unread-count-outlook');
+        if (countElement) {
+            countElement.textContent = unreadCount;
+        }
+        
+        console.log('Synchronisation Outlook:', {
+            completedEmails,
+            unreadCount,
+            totalEmails: document.querySelectorAll('.mail-item').length
+        });
+    }
+    
+    // Écouter les changements du localStorage depuis d'autres onglets/pages
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'completedEmails') {
+            console.log('Changement détecté dans localStorage');
+            syncCompletedEmails();
+        }
+    });
+    
+    // Synchronisation forcée à intervalles réguliers
+    setInterval(syncCompletedEmails, 1000);
+    
+    // Gestion des flags d'importance
+    document.querySelectorAll('.mail-importance i').forEach(function(flag) {
+        flag.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (this.classList.contains('far')) {
+                this.classList.remove('far');
+                this.classList.add('fas');
+                this.style.color = '#d13438';
+            } else {
+                this.classList.remove('fas');
+                this.classList.add('far');
+                this.style.color = '#8a8886';
+            }
+        });
+    });
+    
+    // Gestion des checkboxes
+    document.querySelectorAll('.mail-checkbox input').forEach(function(checkbox) {
+        checkbox.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (this.checked) {
+                this.closest('.mail-item').classList.add('selected');
+            } else {
+                this.closest('.mail-item').classList.remove('selected');
+            }
+        });
+    });
+    
+    // Hover effect pour les warnings de phishing
+    document.querySelectorAll('.mail-item').forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+            const warning = this.querySelector('.phishing-warning');
+            if (warning) {
+                warning.style.opacity = '1';
+                warning.style.transform = 'scale(1.1)';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            const warning = this.querySelector('.phishing-warning');
+            if (warning) {
+                warning.style.opacity = '0.7';
+                warning.style.transform = 'scale(1)';
+            }
+        });
+    });
+    
+    // Simulation des actions de toolbar
+    document.querySelectorAll('.toolbar-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const action = this.textContent.trim();
+            
+            // Animation feedback
+            this.style.background = '#deecf9';
+            setTimeout(() => {
+                this.style.background = '';
+            }, 200);
+            
+            // Simulation d'action
+            console.log(`Action simulée: ${action}`);
+        });
+    });
+});
+</script>
+{% endblock %}
