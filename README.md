@@ -45,7 +45,7 @@ cd CyberSec001
 ```
 
 ### 2. ⚠️ Configuration VPN (REQUIS)
-Avant de démarrer, vous devez ajouter vos fichiers de configuration VPN :
+Avant de démarrer, vous devez configurer les éléments VPN :
 
 ```bash
 # Créer le dossier config
@@ -56,9 +56,16 @@ mkdir -p config
 config/client1.ovpn.txt
 config/client2.ovpn.txt
 # ... jusqu'à client11.ovpn.txt
+
+# Configurer l'IP du serveur de test malware
+cp IP.txt.example IP.txt
+# Éditer IP.txt avec l'IP de votre serveur de test (par défaut: 10.8.0.3)
 ```
 
-**Important :** Les fichiers VPN ne sont pas inclus dans ce repository pour des raisons de sécurité. Contactez votre administrateur réseau pour obtenir les configurations VPN appropriées.
+**Important :** 
+- Les fichiers VPN ne sont pas inclus dans ce repository pour des raisons de sécurité
+- Le fichier `IP.txt` contient l'adresse IP utilisée pour les URLs de test malware
+- Contactez votre administrateur réseau pour obtenir les configurations appropriées
 
 ### 3. Démarrer la VM
 ```bash

@@ -55,3 +55,6 @@ Thumbs.db
 *.png
 *.gif
 *.pdf
+
+# VPN IP configuration (may contain sensitive network info)
+IP.txt
