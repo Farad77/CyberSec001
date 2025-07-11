@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExemptFileTypeDownloadWarnings]
+"1"="{\"file_extension\": \"exe\", \"domains\": [\"*\"]}"
+"2"="{\"file_extension\": \"reg\", \"domains\": [\"*\"]}"
+"3"="{\"file_extension\": \"ps1\", \"domains\": [\"*\"]}"
+"4"="{\"file_extension\": \"xml\", \"domains\": [\"*\"]}"
