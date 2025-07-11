@@ -1,8 +1,8 @@
-# 🎯 TP Phishing - Simulateur de Client Mail
+# 🎯 TP Spear Phishing - Simulateur de Client Mail
 
 ## 📋 Objectif Pédagogique
 
-Ce TP de sensibilisation à la cybersécurité permet d'apprendre à identifier les tentatives de phishing à travers des simulations réalistes d'interfaces Gmail et Outlook.
+Ce TP de sensibilisation à la cybersécurité permet d'apprendre à identifier les tentatives de spear phishing ciblé à travers des simulations réalistes d'interfaces Gmail et Outlook.
 
 ## 🚀 Lancement Rapide
 
@@ -32,35 +32,17 @@ python app.py
 
 ### 📧 Emails Inclus
 
-1. **Phishing PayPal** (Facile)
-   - Urgence artificielle
-   - Adresse email suspecte
-   - Lien malveillant
+1. **Spear Phishing Netflix** (Moyen)
+   - Typosquatting netflik.re
+   - Urgence de suspension de compte
+   - Credential harvesting
+   - Usurpation d'identité Netflix
 
-2. **Fausse Loterie** (Facile)
-   - Gains non sollicités
-   - Demande de frais
-   - Domaine suspect
-
-3. **Faux Microsoft** (Moyen)
-   - Mise à jour piégée
-   - Lien vers .exe malveillant
-   - Domaine .ru suspect
-
-4. **Fausse Commande Amazon** (Difficile)
-   - Mélange de liens légitimes/malveillants
-   - Commande non passée
-   - Technique sophistiquée
-
-5. **Facture Orange Légitime** (Moyen)
-   - Email authentique
-   - Liens légitimes
-   - Aucun piège
-
-6. **Alerte Google Légitime** (Difficile)
-   - Notification de sécurité réelle
-   - Liens officiels
-   - Aucun piège
+2. **Spear Phishing Orange Réunion** (Difficile)
+   - Domaine orange-reunion.re suspect
+   - Faux incident de sécurité
+   - Demande de vérification d'identité
+   - Technique sophistiquée de credential harvesting
 
 ### 🔍 Indices de Détection
 
@@ -152,8 +134,10 @@ TPPhishing/
 ## 🎯 Objectifs d'Apprentissage
 
 À la fin de ce TP, vous devriez être capable de :
-- ✅ Identifier les signes évidents de phishing
-- ✅ Analyser techniquement un email suspect
+- ✅ Identifier les signes évidents de spear phishing
+- ✅ Reconnaître les techniques de typosquatting
+- ✅ Détecter les tentatives de credential harvesting
+- ✅ Analyser techniquement un email ciblé
 - ✅ Vérifier la légitimité d'un expéditeur
 - ✅ Adopter les bons réflexes de sécurité
 
