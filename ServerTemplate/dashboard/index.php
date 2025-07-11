@@ -34,7 +34,6 @@ $global_stats = LogParser::getLogStats($all_logs);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Monitoring - Logs Virtualhosts</title>
     <link rel="stylesheet" href="css/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -82,6 +81,19 @@ $global_stats = LogParser::getLogStats($all_logs);
             </select>
             
             <input type="text" id="ip-filter" placeholder="Filtrer par IP..." onkeyup="filterLogs()">
+        </div>
+
+        <!-- Section graphiques -->
+        <div class="chart-controls">
+            <button class="chart-btn active" onclick="showCharts('overview')">📊 Vue d'ensemble</button>
+            <button class="chart-btn" onclick="showCharts('activity')">📈 Activité</button>
+            <button class="chart-btn" onclick="showCharts('security')">🔒 Sécurité</button>
+        </div>
+        
+        <div class="charts-grid" id="charts-section">
+            <div id="methods-chart"></div>
+            <div id="hourly-chart"></div>
+            <div id="ip-chart"></div>
         </div>
 
         <!-- Table des logs -->
@@ -157,10 +169,12 @@ $global_stats = LogParser::getLogStats($all_logs);
         </div>
     </div>
 
+    <script src="js/charts.js"></script>
     <script src="js/dashboard.js"></script>
     <script>
         // Données des logs pour JavaScript
         const logsData = <?= json_encode($logs_page) ?>;
+        const globalStats = <?= json_encode($global_stats) ?>;
         
         // Auto-refresh
         setInterval(function() {

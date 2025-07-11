@@ -29,10 +29,7 @@ instance/
 .vagrant/
 *.log
 
-# VPN configurations (contains secrets)
-config/
-*.ovpn
-*.ovpn.txt
+
 
 # IDE
 .vscode/

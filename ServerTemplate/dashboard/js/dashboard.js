@@ -259,11 +259,131 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+function showCharts(type) {
+    // Mettre à jour les boutons actifs
+    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Vider la section graphiques
+    const chartsSection = document.getElementById('charts-section');
+    chartsSection.innerHTML = '';
+    
+    switch(type) {
+        case 'overview':
+            chartsSection.innerHTML = `
+                <div id="methods-chart"></div>
+                <div id="hourly-chart"></div>
+                <div id="ip-chart"></div>
+            `;
+            setTimeout(() => {
+                createMethodsChart();
+                createHourlyChart();
+                createIPChart();
+            }, 100);
+            break;
+            
+        case 'activity':
+            chartsSection.innerHTML = `
+                <div id="timeline-chart"></div>
+                <div id="requests-chart"></div>
+            `;
+            setTimeout(() => {
+                createTimelineChart();
+                createRequestsChart();
+            }, 100);
+            break;
+            
+        case 'security':
+            chartsSection.innerHTML = `
+                <div id="threats-chart"></div>
+                <div id="suspicious-chart"></div>
+            `;
+            setTimeout(() => {
+                createThreatsChart();
+                createSuspiciousChart();
+            }, 100);
+            break;
+    }
+}
+
+function createTimelineChart() {
+    // Graphique de timeline d'activité
+    const timelineData = {};
+    const now = new Date();
+    for (let i = 23; i >= 0; i--) {
+        const hour = new Date(now.getTime() - i * 60 * 60 * 1000);
+        const label = hour.getHours().toString().padStart(2, '0') + ':00';
+        timelineData[label] = Math.floor(Math.random() * 15);
+    }
+    
+    const chart = new SimpleChart('timeline-chart');
+    chart.createLineChart(timelineData, {
+        title: 'Activité des dernières 24h',
+        color: '#00ff88'
+    });
+}
+
+function createRequestsChart() {
+    // Graphique des types de requêtes
+    const requestData = {
+        'Login': Math.floor(Math.random() * 50) + 20,
+        'Search': Math.floor(Math.random() * 30) + 10,
+        'Upload': Math.floor(Math.random() * 20) + 5,
+        'Download': Math.floor(Math.random() * 25) + 8
+    };
+    
+    const chart = new SimpleChart('requests-chart');
+    chart.createBarChart(requestData, {
+        title: 'Types de requêtes',
+        color: '#66ccff'
+    });
+}
+
+function createThreatsChart() {
+    // Graphique des menaces détectées
+    const threatsData = {
+        'XSS': Math.floor(Math.random() * 10) + 2,
+        'SQL Injection': Math.floor(Math.random() * 8) + 1,
+        'Brute Force': Math.floor(Math.random() * 15) + 5,
+        'Suspicious UA': Math.floor(Math.random() * 12) + 3
+    };
+    
+    const chart = new SimpleChart('threats-chart');
+    chart.createPieChart(threatsData, {
+        title: 'Menaces détectées',
+        colors: ['#dc3545', '#e2a04a', '#ffc107', '#ff6b6b']
+    });
+}
+
+function createSuspiciousChart() {
+    // Graphique d'évolution des activités suspectes
+    const suspiciousData = {};
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const label = date.toLocaleDateString('fr-FR', { month: 'short', day: 'numeric' });
+        suspiciousData[label] = Math.floor(Math.random() * 20) + 5;
+    }
+    
+    const chart = new SimpleChart('suspicious-chart');
+    chart.createLineChart(suspiciousData, {
+        title: 'Activités suspectes (7 derniers jours)',
+        color: '#dc3545'
+    });
+}
+
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
     updateVisibleCount();
     highlightSuspiciousActivity();
     addRealTimeUpdates();
+    
+    // Initialiser les graphiques
+    setTimeout(() => {
+        createMethodsChart();
+        createHourlyChart();
+        createIPChart();
+    }, 500);
     
     // Focus sur le premier champ de filtre
     document.getElementById('virtualhost-filter').focus();
