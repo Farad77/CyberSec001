@@ -21,8 +21,8 @@ Formation générale sur la détection du phishing avec :
 - Interfaces Gmail et Outlook réalistes
 - Système de progression et scores
 
-### 🎣 TP2SpearPhishing  
-Module spécialisé sur le spear phishing *(en préparation)*
+### 🎣 TP2SpearPhishing
+Module spécialisé sur le spear phishing
 
 ### 🦠 TP3Malware
 Formation sur les pièces jointes malveillantes :
@@ -83,8 +83,12 @@ Dans la VM Windows :
 cd C:\vagrant\TPPhishing
 python app.py
 
+# TP Spear Phishing
+cd C:\vagrant\TP2SpearPhishing
+python app.py
+
 # TP Malware
-cd C:\vagrant\TP3Malware  
+cd C:\vagrant\TP3Malware
 python app.py
 ```
 
