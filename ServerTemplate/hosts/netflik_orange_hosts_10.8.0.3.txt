@@ -1,0 +1,12 @@
+# Example /etc/hosts entries for typosquatting demo
+# Map domains to the attacker VM IP (10.8.0.3)
+# Paste these lines into /etc/hosts on client machines.
+
+10.8.0.3 netflik.re www.netflik.re login.netflik.re account.netflik.re help.netflik.re \
+         secure.netflik.re support.netflik.re mail.netflik.re app.netflik.re pay.netflik.re \
+         id.netflik.re auth.netflik.re portal.netflik.re
+
+10.8.0.3 orange-reunion.re www.orange-reunion.re espace.orange-reunion.re facture.orange-reunion.re \
+         mail.orange-reunion.re support.orange-reunion.re compte.orange-reunion.re secure.orange-reunion.re \
+         id.orange-reunion.re auth.orange-reunion.re portail.orange-reunion.re
+

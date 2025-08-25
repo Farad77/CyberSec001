@@ -28,11 +28,34 @@ instance/
 # Vagrant
 .vagrant/
 *.log
+VM/
 
 # VPN configurations (contains secrets)
 config/
 *.ovpn
 *.ovpn.txt
+
+# Credentials and environment files
+.env
+.env.*
+*.env
+*.env.*
+cred.txt
+*.secret
+*.secrets
+secrets.*
+*secrets*.json
+*credentials*.json
+
+# TLS/PKI private keys and bundles (avoid committing by default)
+*.key
+*.pem
+*.p12
+*.pfx
+*.csr
+# Public certs are often safe, but ignore by default here to avoid leaks
+*.crt
+*.cer
 
 # IDE
 .vscode/

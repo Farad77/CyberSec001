@@ -91,34 +91,12 @@ function analyzeEmail() {
     window.location.href = `/analyze/{{ email.id }}?client={{ client }}`;
 }
 
-// Afficher les vraies destinations des liens au survol
+// Navigation directe en cliquant sur les liens (plus de popup)
 document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('.email-text a');
-    
+
     links.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const url = this.getAttribute('href');
-            const modal = document.createElement('div');
-            modal.className = 'link-modal';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <h3><i class="fas fa-link"></i> Destination du lien</h3>
-                    <p><strong>URL visible :</strong> ${this.textContent}</p>
-                    <p><strong>Vraie destination :</strong> <code>${url}</code></p>
-                    <div class="modal-actions">
-                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="btn btn-primary">
-                            Fermer
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-        });
-        
-        // Ajouter un indicateur visuel pour les liens suspects
+        // Indicateur visuel et info-bulle pour liens suspects, mais on laisse la navigation par défaut
         const href = link.getAttribute('href');
         if (href && (href.includes('malicious') || href.includes('phishing') || href.includes('fake'))) {
             link.style.borderBottom = '2px solid #dc3545';
@@ -129,49 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-.link-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 600px;
-    width: 90%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.modal-content h3 {
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.modal-content p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.modal-content code {
-    background: #f8f9fa;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    color: #dc3545;
-}
-
-.modal-actions {
-    text-align: right;
-    margin-top: 1.5rem;
-}
+.modal-actions { /* plus utilisé, conservé vide intentionnellement */ }
 </style>
 {% endblock %}
