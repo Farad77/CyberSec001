@@ -1,0 +1,22 @@
+sep=;
+Question;Answer 1;Answer 2;Answer 3;Answer 4;Time limit (sec);Correct answer(s)
+Quel est le meilleur réflexe pour accéder à votre banque depuis un email suspect ?;Cliquer sur le lien de l'email;Chercher la banque sur un moteur;Utiliser un favori ou saisir l'URL officielle;Répondre à l'email pour vérifier;30;3
+Dans l'URL https://login.orange.fr.attacker.com, quel est le vrai domaine ?;login.orange.fr;orange.fr;attacker.com;fr.attacker.com;30;3
+Que révèle un fichier nommé Facture.pdf.exe ?;Un document PDF sûr;Un exécutable déguisé en PDF;Une archive ZIP chiffrée;Une image inoffensive;30;2
+Pourquoi activer l'affichage des extensions de fichiers sous Windows ?;Pour mieux trier les fichiers;Pour voir la taille exacte;Pour détecter les doubles extensions malveillantes;Pour accélérer l'ordinateur;30;3
+Vous recevez un SMS avec un QR vers une mise à jour de compte. Que faire ?;Scanner et suivre le lien;Scanner avec une autre application;Ouvrir l'application officielle sans scanner;Transférer le SMS à des amis;30;3
+Email "Document scanné" de l'imprimante avec pièce jointe scan.zip.exe. Action ?;Ouvrir pour vérifier le contenu;Demander à l'IT ou à l'expéditeur via canal connu;Désactiver l'antivirus temporairement;Ajouter l'expéditeur en liste blanche;30;2
+Le cadenas dans la barre d'adresse garantit quoi ?;Que le site est légitime;Que la connexion est chiffrée;Qu'il n'y a aucun risque;Que le site a un certificat EV;30;2
+Vous recevez des demandes MFA inattendues qui insistent. Que faire ?;Approuver pour arrêter;Refuser et alerter l'IT immédiatement;Ignorer jusqu'à ce que ça cesse;Partager votre code pour aider;30;2
+Quelle est la meilleure façon de signaler un email suspect en entreprise ?;Utiliser le bouton Signaler phishing ou la procédure IT;Le supprimer sans rien dire;Répondre pour demander confirmation;Le transférer à des contacts externes;30;1
+Facture d'un fournisseur inconnu avec pièce jointe .zip. Réflexe ?;Ouvrir si l'antivirus ne détecte rien;Contacter la compta ou le fournisseur via canal connu;Payer rapidement pour éviter des pénalités;Ouvrir sur mobile c'est plus sûr;30;2
+Pièce jointe .iso reçue d'un expéditeur inconnu. Que faire ?;Monter l'image pour vérifier;Lancer un scan et ouvrir;Demander validation à l'IT et ne pas ouvrir;Renommer en .pdf et ouvrir;30;3
+Lien raccourci bit.ly dans un email RH. Réflexe ?;Cliquer vite avant expiration;Copier-coller dans le navigateur;Ouvrir l'espace RH via favori;Transférer au service paie;30;3
+Demande urgente de virement signée du DG. Action ?;Exécuter pour rendre service;Répondre OK et payer;Appeler via un numéro interne connu pour valider;Ignorer le message;30;3
+"Votre boîte mail est pleine" avec lien de nettoyage. Réflexe ?;Cliquer et se reconnecter;Donner son mot de passe;Aller au portail officiel de messagerie via favori;Transférer à des collègues;30;3
+Partage OneDrive d'un inconnu demandant connexion. Réflexe ?;S'authentifier via le lien;Télécharger le contenu;Ouvrir votre portail M365 favori et vérifier;Répondre à l'email;30;3
+Avis de livraison DHL avec étiquette .zip. Que faire ?;Ouvrir l'archive;Désactiver l'antivirus et ouvrir;Vérifier sur le site officiel avec le numéro;Transférer au service achats;30;3
+QR code sur une affiche inconnue menant à un concours. Réflexe ?;Scanner et participer;Scanner avec l'appli banque;Chercher le site officiel manuellement;Partager le QR à des amis;30;3
+Fichier Office demande d'activer les macros. Action ?;Activer pour voir le contenu;Activer puis fermer;Ne pas activer et fermer le document;Désactiver l'antivirus;30;3
+SMS de la banque demandant un code à 6 chiffres. Réflexe ?;Envoyer le code;Ne jamais partager un code et appeler la banque;Répondre STOP;Transférer à des amis;30;2
+Partage de documents externes: bonne pratique ?;Envoyer par pièce jointe à tous;Utiliser les outils approuvés (OneDrive/SharePoint);Uploader sur un site inconnu;Partager via messagerie perso;30;2

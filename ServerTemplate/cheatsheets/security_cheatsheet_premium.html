@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet Sécurité – TPE/PME (Premium)</title>
+  <meta name="description" content="Bons réflexes cybersécurité pour TPE/PME – version premium, prête à imprimer (A4).">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --fg: #0f172a; /* slate-900 */
+      --muted: #64748b; /* slate-500 */
+      --ring: #c7d2fe; /* indigo-200 */
+      --brand-1: #7c3aed; /* violet-600 */
+      --brand-2: #4f46e5; /* indigo-600 */
+      --brand-3: #06b6d4; /* cyan-500 */
+      --ok: #10b981; /* emerald-500 */
+      --warn: #f59e0b; /* amber-500 */
+      --danger: #ef4444; /* red-500 */
+      --paper: #ffffffee;
+    }
+
+    /* Page & print */
+    @page { size: A4; margin: 12mm; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: #0f172a;
+      background:
+        radial-gradient(1200px 800px at -10% -10%, #1d253a 0, transparent 60%),
+        radial-gradient(1200px 800px at 110% 110%, #0b4252 0, transparent 60%),
+        linear-gradient(180deg, #0b1220 0%, #0e1627 100%);
+      background-attachment: fixed;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 28px auto;
+      background: linear-gradient(180deg, #ffffff, #ffffff) padding-box,
+                  radial-gradient(120% 140% at 10% -10%, #dbeafe 0, #ede9fe 50%, #f1f5f9 100%) border-box;
+      border: 1px solid transparent;
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(2, 6, 23, 0.55), 0 10px 30px rgba(2, 6, 23, 0.3);
+      overflow: hidden;
+    }
+
+    header.hero {
+      position: relative;
+      padding: 28px 28px 20px;
+      color: white;
+      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+      isolation: isolate;
+    }
+    .hero .shine {
+      position:absolute; inset: -1px;
+      background:
+        radial-gradient(500px 180px at 10% 0%, rgba(255,255,255,0.20), transparent 60%),
+        radial-gradient(400px 200px at 90% 20%, rgba(255,255,255,0.15), transparent 60%),
+        radial-gradient(800px 300px at 50% 120%, rgba(6,182,212,0.20), transparent 60%);
+      mix-blend-mode: screen; opacity: 0.9; pointer-events: none;
+    }
+    .hero-top { display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand {
+      display:flex; align-items:center; gap:14px;
+    }
+    .logo {
+      width:48px; height:48px; border-radius:12px;
+      background: radial-gradient(120% 120% at 30% 20%, #ffffffcc 0, #ffffff22 45%, transparent 60%),
+                  linear-gradient(135deg, #22d3ee, #a78bfa);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 10px 20px rgba(0,0,0,.25);
+      display:grid; place-items:center;
+    }
+    .logo svg { filter: drop-shadow(0 2px 6px rgba(2,6,23,.3)); }
+    .titles h1 { margin:0; font-size: clamp(1.35rem, 2.1vw, 1.9rem); font-weight:800; letter-spacing:.2px; }
+    .titles p { margin:.15rem 0 0; font-size:.95rem; opacity:.95; }
+
+    .org { text-align:right; }
+    .org .badge { font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; opacity:.9; }
+    .org .name { margin-top:.25rem; font-weight:700; }
+
+    .toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; background: #0b122008; backdrop-filter: blur(6px); border-top:1px solid rgba(255,255,255,.22); }
+    .toolbar .meta { font-size:.85rem; opacity:.9; }
+    .btn-print { appearance:none; border:0; border-radius:10px; padding:8px 12px; font-weight:600; color:#0b1220; background: #ffffff; display:inline-flex; align-items:center; gap:8px; box-shadow: 0 8px 20px rgba(2,6,23,.2); cursor:pointer; }
+    .btn-print:hover { transform: translateY(-1px); }
+
+    .content { padding: 22px 24px 26px; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:16px; }
+    @media (max-width: 820px) { .grid { grid-template-columns:1fr; } }
+
+    .card {
+      position:relative; border-radius:14px; padding:16px 16px 14px; background: var(--paper);
+      border:1px solid rgba(15,23,42,.08);
+      box-shadow: 0 6px 20px rgba(2,6,23,.06), inset 0 1px 0 rgba(255,255,255,.6);
+      backdrop-filter: blur(8px);
+      break-inside: avoid; page-break-inside: avoid;
+    }
+    .card .head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .icon {
+      width:32px; height:32px; border-radius:10px; display:grid; place-items:center; color:white;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 6px 14px rgba(2,6,23,.2);
+    }
+    .icon.indigo { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .icon.cyan { background: linear-gradient(135deg, #06b6d4, #22d3ee); }
+    .icon.rose { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+    .icon.emerald { background: linear-gradient(135deg, #10b981, #34d399); }
+    .icon.amber { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+    .icon.slate { background: linear-gradient(135deg, #0ea5e9, #64748b); }
+
+    .card h3 { margin:0; font-size:1.02rem; font-weight:800; letter-spacing:.2px; color:#111827; }
+    .card small { color: var(--muted); }
+    .card ul { margin:.25rem 0 0; padding-left:1.05rem; }
+    .card li { margin:.28rem 0; font-size:.92rem; }
+    .chips { margin-top:.5rem; display:flex; flex-wrap:wrap; gap:6px; }
+    .chip { font-size:.72rem; padding:3px 8px; border-radius:999px; background:#f1f5f9; border:1px solid #e2e8f0; color:#0f172a; }
+
+    .callout {
+      margin-top:10px; border-radius:12px; padding:10px 12px;
+      background: linear-gradient(180deg, #f8fafc, #ffffff);
+      border: 1px dashed #cbd5e1; font-size:.9rem;
+    }
+
+    footer {
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      padding: 14px 18px; font-size:.85rem; color:#475569; background: #f8fafc; border-top:1px solid #e2e8f0;
+    }
+
+    .no-print { }
+    /* Preserve colors in print (Chrome/Edge/Firefox) */
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @media print {
+      body { background: #fff; }
+      .page { box-shadow:none; border:0; margin:0; }
+      .no-print { display:none !important; }
+      /* Ensure header remains readable if backgrounds are suppressed */
+      header.hero { background:#ffffff !important; color:#111827 !important; }
+      header.hero .shine { display:none !important; }
+      .logo { background:#e5e7eb !important; }
+      .titles h1, .titles p, .org .badge, .org .name { color:#111827 !important; }
+      /* Icons: avoid white-on-white if bg gradients are not printed */
+      .icon { color:#111827 !important; background:none !important; border:1px solid #cbd5e1; }
+      /* Cards: solid borders for print clarity */
+      .card { box-shadow:none; border:1px solid #e5e7eb; }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header class="hero">
+      <div class="shine"></div>
+      <div class="hero-top">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <!-- Shield icon -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Bouclier">
+              <path d="M11.7 2.06a.75.75 0 0 1 .6 0l7.5 3.21c.28.12.46.39.46.69V11c0 5.52-3.91 8.9-7.19 10.49-.75.37-1.58.37-2.33 0C8.46 19.9 4.55 16.52 4.55 11V5.96c0-.3.18-.57.46-.69l7.5-3.21Z"/>
+            </svg>
+          </div>
+          <div class="titles">
+            <h1>Cheat Sheet Sécurité – TPE/PME</h1>
+            <p>Bons réflexes face aux situations courantes (prêt à imprimer)</p>
+          </div>
+        </div>
+        <div class="org">
+          <div class="badge">Votre logo</div>
+          <div class="name">Nom de l’entreprise</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="toolbar no-print">
+      <div class="meta">Format A4 • 1 page • Sans service IT/SOC</div>
+      <button class="btn-print" onclick="window.print()" title="Imprimer / Export PDF">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Imprimer / PDF
+      </button>
+    </div>
+
+    <section class="content">
+      <div class="grid">
+
+        <section class="card">
+          <div class="head">
+            <div class="icon indigo" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3>3 vérifs avant de cliquer</h3>
+          </div>
+          <ul>
+            <li><strong>Contexte</strong> : demande attendue, logique, datée, personnalisée.</li>
+            <li><strong>Expéditeur</strong> : connu, adresse crédible (pas d’homographes).</li>
+            <li><strong>Cible</strong> : lire le domaine (avant .fr/.com), pas de double extension (.pdf.exe).</li>
+          </ul>
+          <div class="chips">
+            <span class="chip">Favoris officiels</span>
+            <span class="chip">Lire le domaine</span>
+            <span class="chip">Voir l’extension</span>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon cyan" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            </div>
+            <h3>Liens & URL</h3>
+          </div>
+          <ul>
+            <li><strong>Domaine</strong> : login.orange.fr.attacker.com → réel : <span style="font-family:ui-monospace,Consolas,Monaco,monospace">attacker.com</span>.</li>
+            <li><strong>Cadenas</strong> : chiffrement ≠ légitimité. Toujours lire le domaine.</li>
+            <li><strong>Accès</strong> : banque/M365/Google via favoris ou appli officielle.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon rose" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13V5a2 2 0 1 1 4 0v8"/><path d="M5 13h14l-1 7H6l-1-7Z"/></svg>
+            </div>
+            <h3>Pièces jointes</h3>
+          </div>
+          <ul>
+            <li><strong>Danger par défaut</strong> : .exe, .msi, .iso, .zip et doubles extensions (.pdf.exe, .zip.exe).</li>
+            <li><strong>Scanners/Transport</strong> : « scan.zip.exe », « étiquette.zip » → valider via un canal connu.</li>
+            <li><strong>Macros</strong> : ne jamais activer ; préférer un viewer en ligne.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon emerald" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3 3 0 0 1 0 6H6"/></svg>
+            </div>
+            <h3>Mots de passe & MFA</h3>
+          </div>
+          <ul>
+            <li><strong>Gestionnaire</strong> : utiliser celui du navigateur ; mots de passe uniques.</li>
+            <li><strong>MFA</strong> : activer partout (mail, banque, cloud).</li>
+            <li><strong>Fatigue MFA</strong> : refuser toute demande non sollicitée.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon amber" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92V7.08c0-.53-.28-1.02-.74-1.3L12.74.64a1.5 1.5 0 0 0-1.48 0L2.74 5.78A1.5 1.5 0 0 0 2 7.08v9.84c0 .53.28 1.02.74 1.3l8.52 5.14c.46.28 1.02.28 1.48 0l8.52-5.14c.46-.28.74-.77.74-1.3Z"/></svg>
+            </div>
+            <h3>Téléphone & SMS</h3>
+          </div>
+          <ul>
+            <li>Vérifier via un numéro connu (site officiel/carte), jamais celui du message.</li>
+            <li>SMS livraison/banque : ouvrir l’appli officielle, pas le lien.</li>
+            <li>Ne jamais donner de codes MFA/banque par téléphone/SMS.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon cyan" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 12v9"/><path d="M12 3v3"/><path d="M5 12h14"/></svg>
+            </div>
+            <h3>Web & téléchargements</h3>
+          </div>
+          <ul>
+            <li>Mises à jour/logiciels : <em>uniquement</em> depuis les sites officiels.</li>
+            <li>Liens raccourcis (bit.ly…) : prudence ; préférer l’accès direct au site/appli.</li>
+            <li>Navigateur à jour + protections (Safe Browsing/SmartScreen) activées.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon slate" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M6 7V5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v2"/></svg>
+            </div>
+            <h3>Postes & réseaux</h3>
+          </div>
+          <ul>
+            <li>USB inconnue : ne pas brancher.</li>
+            <li>Wi‑Fi public : éviter pour banque/gestion ; sinon attendre ou VPN perso.</li>
+            <li>Verrouiller l’écran : <span style="font-family:ui-monospace,Consolas,Monaco,monospace">Win+L</span> dès qu’on s’absente.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon emerald" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h3>En cas de doute</h3>
+          </div>
+          <ul>
+            <li>Ne pas cliquer/ouvrir ; ranger dans un dossier « À vérifier ».</li>
+            <li>Demander un 2ᵉ avis (collègue/dirigeant).</li>
+            <li>Contacter l’émetteur via un canal déjà connu (pas le numéro/lien du message).</li>
+          </ul>
+          <div class="callout">Astuce : une pause de 30 secondes aide à repérer les incohérences et les urgences artificielles.</div>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon rose" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6"/><path d="M18 20V10"/><path d="M6 20v-4"/></svg>
+            </div>
+            <h3>En cas de clic / téléchargement</h3>
+          </div>
+          <ul>
+            <li>Couper Internet (Wi‑Fi/ethernet). Ne pas exécuter le fichier.</li>
+            <li>Noter l’heure/le message et faire une capture.</li>
+            <li>Scanner avec Windows Sécurité ; ne pas « nettoyer » seul si alerte.</li>
+            <li>Changer les mots de passe sensibles depuis un appareil sain.</li>
+            <li>Paiements : appeler la banque/fournisseur via numéro officiel pour bloquer/valider.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon amber" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M21 10l-9 4-9-4"/><path d="M21 13l-9 4-9-4"/></svg>
+            </div>
+            <h3>Sauvegardes simples</h3>
+          </div>
+          <ul>
+            <li>Hebdo : copie des dossiers clés sur disque externe (débranché hors usage).</li>
+            <li>Cloud pro minimal (OneDrive/Drive) pour documents critiques.</li>
+            <li>Tester une restauration 1×/trimestre.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon cyan" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/></svg>
+            </div>
+            <h3>Réglages express Windows (5 min)</h3>
+          </div>
+          <ul>
+            <li>Extensions visibles : Explorateur → Affichage → cocher « Extensions de noms de fichiers ».</li>
+            <li>SmartScreen/Réputation : Sécurité Windows → Contrôle des applis & du navigateur → activer.</li>
+            <li>Mises à jour auto : Windows Update + Navigateur (Chrome/Edge/Firefox).</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="head">
+            <div class="icon slate" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6H4a2 2 0 0 0-2 2v9h5l2 2h6l2-2h5V8a2 2 0 0 0-2-2z"/></svg>
+            </div>
+            <h3>Procédure maison (à afficher)</h3>
+          </div>
+          <ul>
+            <li>Référent : <strong>[Nom]</strong> — tél : <strong>[Numéro]</strong>.</li>
+            <li>Virements/achats urgents : jamais seul ; <strong>double validation</strong> systématique.</li>
+            <li>Fiche d’incident : date, canal, action (utile assurance/suivi).</li>
+          </ul>
+        </section>
+
+      </div>
+    </section>
+
+    <footer>
+      <div>Version 1.1 • TPE/PME • Libre reproduction interne</div>
+      <div>Personnalisez le bandeau (logo/couleurs) avant impression</div>
+    </footer>
+  </article>
+</body>
+</html>
